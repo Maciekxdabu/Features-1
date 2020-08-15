@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Drop
+  - Cup
+  - Ground
   - 
   - 
   - 
@@ -43,4 +43,10 @@ TagManager:
     locked: 0
   - name: Characters_Scene_1
     uniqueID: 3832821867
+    locked: 0
+  - name: Fluid_Cup
+    uniqueID: 3663794037
+    locked: 0
+  - name: Cup
+    uniqueID: 604127225
     locked: 0
