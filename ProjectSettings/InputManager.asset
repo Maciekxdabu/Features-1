@@ -499,7 +499,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 5
+    axis: 6
     joyNum: 0
   - serializedVersion: 3
     m_Name: Joystick_Arrow_Vertical
@@ -534,7 +534,7 @@ InputManager:
     axis: 3
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Joystick_LeftStick_Vertical
+    m_Name: Joystick_RightStick_Vertical
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 

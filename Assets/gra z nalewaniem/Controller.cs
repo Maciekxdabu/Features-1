@@ -77,7 +77,7 @@ public class Controller : MonoBehaviour
                 JoystickArrowPressed = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.JoystickButton8))
+            if (Input.GetKeyDown(KeyCode.JoystickButton10))
             {
                 bottleHeld = !bottleHeld;
 

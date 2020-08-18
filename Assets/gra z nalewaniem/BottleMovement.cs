@@ -28,7 +28,19 @@ public class BottleMovement : MonoBehaviour
             //transform.Rotate(Vector3.back * Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime);
 
             transform.position += new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime, 0);
-            transform.Rotate(Vector3.back * Input.GetAxis("Joystick_Triggers") * rotationSpeed * Time.deltaTime);
+            //transform.Rotate(Vector3.back * Input.GetAxis("Joystick_Triggers") * rotationSpeed * Time.deltaTime);
+
+            float direction = 0;
+            if (Input.GetKey(KeyCode.JoystickButton6))
+            {
+                direction -= 1;
+            }
+            if (Input.GetKey(KeyCode.JoystickButton7))
+            {
+                direction += 1;
+            }
+
+            transform.Rotate(Vector3.back * direction * rotationSpeed * Time.deltaTime);
         }
 
         /*if (Input.GetKeyDown(KeyCode.JoystickButton4))//RB
