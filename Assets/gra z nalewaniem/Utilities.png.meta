@@ -31,7 +31,7 @@ TextureImporter:
     second: Drop
   - first:
       213: -7276346241614950853
-    second: Utilities_5
+    second: Arrow
   - first:
       213: 7434079164540695141
     second: Utilities_6
@@ -232,7 +232,7 @@ TextureImporter:
         width: 150
         height: 150
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,6 +240,27 @@ TextureImporter:
       bones: []
       spriteID: bbe34beedc73561e0800000000000000
       internalID: -2205295084915376453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 319
+        width: 61
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3ecacd15a9350b90800000000000000
+      internalID: -7276346241614950853
       vertices: []
       indices: 
       edges: []

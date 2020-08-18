@@ -5,7 +5,8 @@ using UnityEngine;
 public class BottleMovement : MonoBehaviour
 {
     public bool toggle = false;
-    public float rotSpeed;
+    public float rotationSpeed;
+    public float moveSpeed;
 
     private Vector3 homeP;
     private Quaternion homeR;
@@ -22,17 +23,43 @@ public class BottleMovement : MonoBehaviour
     {
         if (toggle == true)
         {
-            transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0);
-            transform.Rotate(Vector3.back * Input.GetAxisRaw("Horizontal") * rotSpeed);
+            //Mouse
+            //transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0);
+            //transform.Rotate(Vector3.back * Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime);
+
+            transform.position += new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime, 0);
+            transform.Rotate(Vector3.back * Input.GetAxis("Joystick_Triggers") * rotationSpeed * Time.deltaTime);
         }
+
+        /*if (Input.GetKeyDown(KeyCode.JoystickButton4))//RB
+        {
+            toggle = true;
+        }
+        if (Input.GetKeyUp(KeyCode.JoystickButton4))//RB
+        {
+            toggle = false;
+
+            transform.position = homeP;
+            transform.rotation = homeR;
+        }*/
     }
     
-    private void OnMouseDown()
+    /*private void OnMouseDown()
+    {
+        grabBottle();
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        releaseBottle();
+    }*/
+
+    public void grabBottle()
     {
         toggle = true;
     }
 
-    private void OnMouseUpAsButton()
+    public void releaseBottle()
     {
         toggle = false;
 
