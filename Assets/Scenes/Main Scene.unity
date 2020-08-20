@@ -325,7 +325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163036657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 1.571, z: 0}
+  m_LocalPosition: {x: -0.8, y: 10.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387696015}
@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377629596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: 1.571, z: 0}
+  m_LocalPosition: {x: 0.8, y: 10.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 387696015}
@@ -542,11 +542,10 @@ Transform:
   m_GameObject: {fileID: 387696014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.99, y: 0.79, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children:
   - {fileID: 163036658}
   - {fileID: 377629597}
-  - {fileID: 1775748933}
   m_Father: {fileID: 710846931}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -590,7 +589,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4645323745407487979, guid: 4f5278350cbe65a41850bd82bfe87e1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5498c2ad361122c46bfb55e8a222bfcf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -618,8 +617,19 @@ MonoBehaviour:
   - {fileID: 377629597}
   dropCooldown: 0
   Drop: {fileID: 248791376300907094, guid: 52e058dfcd34c7949bd0b1ab504ce5bb, type: 3}
-  liquidColor: {r: 1, g: 1, b: 1, a: 1}
-  liquidSpeed: 3.75
+  liquidName:
+  - "W\xF3dka"
+  - Sok
+  liquidSprite:
+  - {fileID: 21300000, guid: 5498c2ad361122c46bfb55e8a222bfcf, type: 3}
+  - {fileID: 21300000, guid: a9c8c1bdac6bbeb4d88acb09fc27a66d, type: 3}
+  liquidColor:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  liquidSpeed:
+  - 5
+  - 5
+  currentLiquid: 0
 --- !u!60 &387696018
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -627,7 +637,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387696014}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -637,7 +647,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.85, y: 3.02}
+    oldSize: {x: 6.45, y: 21.034395}
     newSize: {x: 0.85, y: 3.02}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -672,6 +682,8 @@ MonoBehaviour:
   toggle: 0
   rotationSpeed: 100
   moveSpeed: 10
+  pouringScript: {fileID: 387696017}
+  controller: {fileID: 1544035298}
 --- !u!1 &452530312
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +735,8 @@ MonoBehaviour:
   toggle: 0
   rotationSpeed: 100
   moveSpeed: 10
+  pouringScript: {fileID: 0}
+  controller: {fileID: 0}
 --- !u!114 &452530315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,8 +754,15 @@ MonoBehaviour:
   - {fileID: 754366689}
   dropCooldown: 0
   Drop: {fileID: 248791376300907094, guid: 52e058dfcd34c7949bd0b1ab504ce5bb, type: 3}
-  liquidColor: {r: 1, g: 1, b: 0, a: 1}
-  liquidSpeed: 3.75
+  liquidName: []
+  liquidSprite: []
+  liquidColor:
+  - {r: 5.441425e-10, g: 5.37e-43, b: 2.1958e-41, a: 4.5904e-41}
+  - {r: 3.4788648e+12, g: 4.5904e-41, b: -0.0000000012747954, a: 5.35e-43}
+  - {r: 0, g: NaN, b: 2.2177e-41, a: 5.37e-43}
+  - {r: 2.674e-42, g: 0, b: 78132.7, a: 7.167122e-37}
+  liquidSpeed: []
+  currentLiquid: 0
 --- !u!60 &452530316
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5903,7 +5924,7 @@ Transform:
   m_GameObject: {fileID: 966299289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children:
   - {fileID: 1295288284}
   - {fileID: 1134909765}
@@ -5950,7 +5971,7 @@ SpriteRenderer:
   m_SortingLayerID: 604127225
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2215190768319437505, guid: 4f5278350cbe65a41850bd82bfe87e1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86201a618485c2142a4ebc836a89ae70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5974,7 +5995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fluidLevel: 0
-  maxY: -1.435
+  maxY: -3.08
+  Ydistance: 3.05
   liquidPerDrop: 0.075
   fluid: {fileID: 1295288284}
   ColorList: []
@@ -5996,10 +6018,12 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -1.0821179, y: 0.7805705}
-  - {x: -0.696886, y: -0.6986854}
-  - {x: 0.71849996, y: -0.6956159}
-  - {x: 1.0739089, y: 0.75173014}
+  - {x: -0.9581236, y: 1.9155141}
+  - {x: -0.733961, y: -0.65627384}
+  - {x: -0.44237128, y: -1.037864}
+  - {x: 0.4378811, y: -1.0282719}
+  - {x: 0.71568644, y: -0.57926947}
+  - {x: 0.96296656, y: 1.9453776}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -6106,7 +6130,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8736555627959552589, guid: 4f5278350cbe65a41850bd82bfe87e1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f3c4189fc418b140981957cb09fc0b5, type: 3}
   m_MaskAlphaCutoff: 0
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
@@ -6156,10 +6180,17 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169658217}
-  m_Text: "Controls (based on Xbox controller):\nLB - press to start game, later
-    to serve drink\nArrows left and right - use to choose which bottle to use\nLeft
-    thumbstick - press to grab/release chosen bottle\n\t / used to move held bottle\nTriggers
-    - used to rotate held bottle"
+  m_Text: 'Controls (controller type is set in Controller object):
+
+    LB - press
+    to start game, later to serve drink
+
+    Left thumbstick - used to move bottle
+    /
+
+    click to switch bottles
+
+    Triggers - used to rotate held bottle'
   m_OffsetZ: 0
   m_CharacterSize: 0.01
   m_LineSpacing: 1
@@ -6244,8 +6275,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295288283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.435, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -3.08, z: 0}
+  m_LocalScale: {x: 2, y: 2.6711318, z: 1}
   m_Children: []
   m_Father: {fileID: 966299290}
   m_RootOrder: 0
@@ -6524,6 +6555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f298cbbef25d8348a07d4380e1a5ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamePad: 0
   GoalsList:
   - 0.25
   - 0.5
@@ -6535,13 +6567,9 @@ MonoBehaviour:
   goaltext: {fileID: 1948248976}
   ScoreText: {fileID: 220354948}
   Cup: {fileID: 966299292}
-  Arrow: {fileID: 81153756}
-  bottles:
-  - {fileID: 387696019}
-  - {fileID: 452530314}
+  bottle: {fileID: 387696019}
   goal: 0
   Score: 0
-  chosenBottle: 0
 --- !u!4 &1544035299
 Transform:
   m_ObjectHideFlags: 0
@@ -6574,7 +6602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1610635967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6688,101 +6716,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610635966}
   m_CullTransparentMesh: 0
---- !u!1 &1775748932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1775748933}
-  - component: {fileID: 1775748935}
-  - component: {fileID: 1775748934}
-  m_Layer: 0
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1775748933
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775748932}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.23, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 387696015}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!102 &1775748934
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775748932}
-  m_Text: "W\xF3da"
-  m_OffsetZ: 0
-  m_CharacterSize: 0.01
-  m_LineSpacing: 1
-  m_Anchor: 4
-  m_Alignment: 1
-  m_TabSize: 4
-  m_FontSize: 300
-  m_FontStyle: 0
-  m_RichText: 1
-  m_Font: {fileID: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
---- !u!23 &1775748935
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775748932}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1948248974
 GameObject:
   m_ObjectHideFlags: 0
