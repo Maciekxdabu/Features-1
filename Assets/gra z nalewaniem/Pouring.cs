@@ -11,16 +11,19 @@ public class Pouring : MonoBehaviour
 
     public GameObject Drop;
 
-    public Color liquidColor;
-    public float liquidSpeed;
+    public string[] liquidName;
+    public Sprite[] liquidSprite;
+    public Color[] liquidColor;
+    public float[] liquidSpeed;
 
-    // Start is called before the first frame update
+    [Header("Do not change")]
+    public int currentLiquid = 0;
+
     void Start()
     {
         cooldown = dropCooldown;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 pourPosition = Vector3.zero;
@@ -49,12 +52,25 @@ public class Pouring : MonoBehaviour
             if (cooldown < 0)
             {
                 GameObject drop = Instantiate(Drop, pourPosition, Quaternion.identity);
-                drop.GetComponent<DropScript>().dropColor = liquidColor;
-                drop.GetComponent<DropScript>().speed = liquidSpeed;
+                drop.GetComponent<DropScript>().dropColor = liquidColor[currentLiquid];
+                drop.GetComponent<DropScript>().speed = liquidSpeed[currentLiquid];
 
 
                 cooldown = dropCooldown;
             }
         }
+    }
+
+    public void nextLiquid()
+    {
+        currentLiquid += 1;
+        if (currentLiquid == liquidColor.Length)
+        {
+            currentLiquid = 0;
+        }
+
+        GetComponent<SpriteRenderer>().sprite = liquidSprite[currentLiquid];
+
+        GetComponent<BottleMovement>().resetRotation();
     }
 }

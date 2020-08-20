@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    public enum State
+    /*public enum State
     {
         choosingBottle,
         movingBottle,
         gameOut
+    }*/
+
+    public enum GamePad
+    {
+        Xbox,
+        PS4
     }
+
+    [Tooltip("GamePad to controll with")]
+    public GamePad gamePad = GamePad.PS4;
 
     public float []GoalsList;
 
@@ -22,25 +31,25 @@ public class Controller : MonoBehaviour
     public TextMesh goaltext;
     public TextMesh ScoreText;
     public FluidLevel Cup;
-    public Transform Arrow;
+    //public Transform Arrow;
 
-    [Header("List of bottles to use")]
-    public BottleMovement[] bottles;
+    [Header("Bottles to use")]
+    public BottleMovement bottle;
 
     [Header("Leave at zero")]
     public float goal;
     public int Score = 0;
-    public int chosenBottle = 0;
+    //public int chosenBottle = 0;
 
     //private State current = State.gameOut;
     private bool gameOn = false;
-    private bool bottleHeld = false;
+    //private bool bottleHeld = false;
     private bool JoystickArrowPressed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        Arrow.gameObject.SetActive(false);
+        //Arrow.gameObject.SetActive(false);
 
         newQuest();
     }
@@ -48,9 +57,36 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.JoystickButton4))
+        {
+            if (gameOn == false)
+            {
+                bottle.grabBottle();
+                //chosenBottle = 0;
+                gameOn = true;
+                //current = State.choosingBottle;
+                //Arrow.gameObject.SetActive(true);
+            }
+            else
+            {
+                /*if (bottleHeld == true)
+                {
+                    bottle.releaseBottle();
+                    bottleHeld = false;
+                }*/
+
+                //chosenBottle = 0;
+                bottle.releaseBottle();
+                gameOn = false;
+                //current = State.gameOut;
+                //Arrow.gameObject.SetActive(false);
+                Serve();
+            }
+        }
+
         if (gameOn == true)
         {
-            if (bottleHeld == false)
+            /*if (bottleHeld == false)
             {
                 if (Input.GetAxis("Joystick_Arrow_Horizontal") == 1 && JoystickArrowPressed == false)//Joystick Right Arrow
                 {
@@ -70,52 +106,28 @@ public class Controller : MonoBehaviour
 
                     Arrow.position = bottles[chosenBottle].transform.position + new Vector3(0, arrowDisplacement, 0);
                 }
-            }
+            }*/
 
-            if (Input.GetAxis("Joystick_Arrow_Horizontal") == 0)
+            /*if (Input.GetAxis("Joystick_Arrow_Horizontal_" + gamePad.ToString()) == 0)//Axis: Xbox:6th PS4:7th
             {
                 JoystickArrowPressed = false;
-            }
+            }*/
 
-            if (Input.GetKeyDown(KeyCode.JoystickButton10))
+            if (Input.GetKeyDown( (gamePad == GamePad.Xbox) ? KeyCode.JoystickButton8 : KeyCode.JoystickButton10 ))//Xbox:8 PS4:10
             {
-                bottleHeld = !bottleHeld;
+                //bottleHeld = !bottleHeld;
 
-                if (bottleHeld == true)
+                /*if (bottleHeld == true)
                 {
-                    bottles[chosenBottle].grabBottle();
-                    Arrow.gameObject.SetActive(false);
+                    bottle.grabBottle();
+                    //Arrow.gameObject.SetActive(false);
                 }
                 else
                 {
-                    bottles[chosenBottle].releaseBottle();
-                    Arrow.gameObject.SetActive(true);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.JoystickButton4))
-        {
-            if (gameOn == false)
-            {
-                chosenBottle = 0;
-                gameOn = true;
-                //current = State.choosingBottle;
-                Arrow.gameObject.SetActive(true);
-            }
-            else
-            {
-                if (bottleHeld == true)
-                {
-                    bottles[chosenBottle].releaseBottle();
-                    bottleHeld = false;
-                }
-
-                chosenBottle = 0;
-                gameOn = false;
-                //current = State.gameOut;
-                Arrow.gameObject.SetActive(false);
-                Serve();
+                    bottle.releaseBottle();
+                    //Arrow.gameObject.SetActive(true);
+                }*/
+                bottle.pouringScript.nextLiquid();
             }
         }
     }

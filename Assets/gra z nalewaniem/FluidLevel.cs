@@ -7,6 +7,7 @@ public class FluidLevel : MonoBehaviour
     [Range(0, 100)]
     public float fluidLevel = 0;
     public float maxY;
+    public float Ydistance;
     public float liquidPerDrop;
     public Transform fluid;
 
@@ -26,7 +27,7 @@ public class FluidLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fluid.transform.position = new Vector3(0, maxY + fluidLevel*maxY/(-100), 0);
+        fluid.transform.localPosition = new Vector3(0, maxY + fluidLevel*Ydistance/100, 0);
         fluid.GetComponent<SpriteRenderer>().color = currentColor;
     }
 

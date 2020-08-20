@@ -8,17 +8,18 @@ public class BottleMovement : MonoBehaviour
     public float rotationSpeed;
     public float moveSpeed;
 
+    public Pouring pouringScript;
+    public Controller controller;
+
     private Vector3 homeP;
     private Quaternion homeR;
 
-    // Start is called before the first frame update
     void Start()
     {
         homeP = transform.position;
         homeR = transform.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (toggle == true)
@@ -27,20 +28,27 @@ public class BottleMovement : MonoBehaviour
             //transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0);
             //transform.Rotate(Vector3.back * Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime);
 
-            transform.position += new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime, 0);
-            //transform.Rotate(Vector3.back * Input.GetAxis("Joystick_Triggers") * rotationSpeed * Time.deltaTime);
+            transform.position += new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime, 0);//Xbox and PS4
 
-            float direction = 0;
-            if (Input.GetKey(KeyCode.JoystickButton6))
+            if (controller.gamePad == Controller.GamePad.Xbox)
             {
-                direction -= 1;
+                transform.Rotate(Vector3.back * Input.GetAxis("Joystick_Triggers") * rotationSpeed * Time.deltaTime);//Xbox
             }
-            if (Input.GetKey(KeyCode.JoystickButton7))
+            else
             {
-                direction += 1;
-            }
+                //PS4
+                float direction = 0;
+                if (Input.GetKey(KeyCode.JoystickButton6))
+                {
+                    direction -= 1;
+                }
+                if (Input.GetKey(KeyCode.JoystickButton7))
+                {
+                    direction += 1;
+                }
 
-            transform.Rotate(Vector3.back * direction * rotationSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.back * direction * rotationSpeed * Time.deltaTime);
+            }
         }
 
         /*if (Input.GetKeyDown(KeyCode.JoystickButton4))//RB
@@ -51,8 +59,7 @@ public class BottleMovement : MonoBehaviour
         {
             toggle = false;
 
-            transform.position = homeP;
-            transform.rotation = homeR;
+            resetTransform();
         }*/
     }
     
@@ -75,7 +82,17 @@ public class BottleMovement : MonoBehaviour
     {
         toggle = false;
 
+        resetTransform();
+    }
+
+    public void resetTransform()
+    {
         transform.position = homeP;
+        transform.rotation = homeR;
+    }
+
+    public void resetRotation()
+    {
         transform.rotation = homeR;
     }
 }
