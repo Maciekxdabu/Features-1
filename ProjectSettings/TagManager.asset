@@ -41,18 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Characters_Scene_1
-    uniqueID: 3832821867
+  - name: Character_Scene_1
+    uniqueID: 1570427045
     locked: 0
   - name: Stacks
-    uniqueID: 1077594787
+    uniqueID: 3790835523
     locked: 0
   - name: Fluid_Cup
-    uniqueID: 3663794037
+    uniqueID: 987846667
     locked: 0
   - name: Cup
-    uniqueID: 604127225
+    uniqueID: 1096927051
     locked: 0
   - name: Bottle
-    uniqueID: 3233356739
+    uniqueID: 3856896129
     locked: 0
