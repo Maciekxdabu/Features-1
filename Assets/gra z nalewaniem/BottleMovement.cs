@@ -7,6 +7,7 @@ public class BottleMovement : MonoBehaviour
     public bool toggle = false;
     public float rotationSpeed;
     public float moveSpeed;
+    public float wankaSpeed;
 
     public Pouring pouringScript;
     public Controller controller;
@@ -18,6 +19,8 @@ public class BottleMovement : MonoBehaviour
     {
         homeP = transform.position;
         homeR = transform.rotation;
+
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void Update()
@@ -49,18 +52,9 @@ public class BottleMovement : MonoBehaviour
 
                 transform.Rotate(Vector3.back * direction * rotationSpeed * Time.deltaTime);
             }
-        }
 
-        /*if (Input.GetKeyDown(KeyCode.JoystickButton4))//RB
-        {
-            toggle = true;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * wankaSpeed);
         }
-        if (Input.GetKeyUp(KeyCode.JoystickButton4))//RB
-        {
-            toggle = false;
-
-            resetTransform();
-        }*/
     }
     
     /*private void OnMouseDown()
@@ -76,11 +70,19 @@ public class BottleMovement : MonoBehaviour
     public void grabBottle()
     {
         toggle = true;
+
+        pouringScript.grabFromStack();
+
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void releaseBottle()
     {
         toggle = false;
+
+        pouringScript.releaseFromStack();
+
+        GetComponent<SpriteRenderer>().enabled = false;
 
         resetTransform();
     }

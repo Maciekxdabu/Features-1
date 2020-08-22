@@ -7,7 +7,6 @@ public class DropScript : MonoBehaviour
     public Color dropColor;
     public float speed;
 
-    // Start is called before the first frame update
     void Start()
     {
         GetComponent<SpriteRenderer>().color = dropColor;

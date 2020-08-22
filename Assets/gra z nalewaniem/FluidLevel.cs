@@ -15,16 +15,16 @@ public class FluidLevel : MonoBehaviour
     public List<Color> ColorList = new List<Color>();
     public List<float> ColorValues = new List<float>();
     private int wodkaIndex = -1;
+
+    [Header("Fluid with this color is recognized as wódka")]
     public Color wodkaColor = Color.white;
     
 
-    // Start is called before the first frame update
     void Start()
     {
         currentColor.a = 255;
     }
 
-    // Update is called once per frame
     void Update()
     {
         fluid.transform.localPosition = new Vector3(0, maxY + fluidLevel*Ydistance/100, 0);

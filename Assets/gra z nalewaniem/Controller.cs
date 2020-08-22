@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    /*public enum State
-    {
-        choosingBottle,
-        movingBottle,
-        gameOut
-    }*/
-
     public enum GamePad
     {
         Xbox,
@@ -31,30 +24,23 @@ public class Controller : MonoBehaviour
     public TextMesh goaltext;
     public TextMesh ScoreText;
     public FluidLevel Cup;
-    //public Transform Arrow;
 
-    [Header("Bottles to use")]
+    [Header("Bottle to use")]
     public BottleMovement bottle;
+    public Pouring bottleP;
 
     [Header("Leave at zero")]
     public float goal;
-    public int Score = 0;
-    //public int chosenBottle = 0;
+    public int Money = 0;
 
-    //private State current = State.gameOut;
     private bool gameOn = false;
-    //private bool bottleHeld = false;
     private bool JoystickArrowPressed = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //Arrow.gameObject.SetActive(false);
-
         newQuest();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton4))
@@ -62,72 +48,21 @@ public class Controller : MonoBehaviour
             if (gameOn == false)
             {
                 bottle.grabBottle();
-                //chosenBottle = 0;
                 gameOn = true;
-                //current = State.choosingBottle;
-                //Arrow.gameObject.SetActive(true);
             }
             else
             {
-                /*if (bottleHeld == true)
-                {
-                    bottle.releaseBottle();
-                    bottleHeld = false;
-                }*/
-
-                //chosenBottle = 0;
                 bottle.releaseBottle();
                 gameOn = false;
-                //current = State.gameOut;
-                //Arrow.gameObject.SetActive(false);
                 Serve();
             }
         }
 
         if (gameOn == true)
         {
-            /*if (bottleHeld == false)
-            {
-                if (Input.GetAxis("Joystick_Arrow_Horizontal") == 1 && JoystickArrowPressed == false)//Joystick Right Arrow
-                {
-                    JoystickArrowPressed = true;
-                    chosenBottle += 1;
-                    if (chosenBottle == bottles.Length)
-                        chosenBottle = 0;
-
-                    Arrow.position = bottles[chosenBottle].transform.position + new Vector3(0, arrowDisplacement, 0);
-                }
-                if (Input.GetAxis("Joystick_Arrow_Horizontal") == -1 && JoystickArrowPressed == false)//Joystick Left Arrow
-                {
-                    JoystickArrowPressed = true;
-                    chosenBottle -= 1;
-                    if (chosenBottle == -1)
-                        chosenBottle = bottles.Length - 1;
-
-                    Arrow.position = bottles[chosenBottle].transform.position + new Vector3(0, arrowDisplacement, 0);
-                }
-            }*/
-
-            /*if (Input.GetAxis("Joystick_Arrow_Horizontal_" + gamePad.ToString()) == 0)//Axis: Xbox:6th PS4:7th
-            {
-                JoystickArrowPressed = false;
-            }*/
-
             if (Input.GetKeyDown( (gamePad == GamePad.Xbox) ? KeyCode.JoystickButton8 : KeyCode.JoystickButton10 ))//Xbox:8 PS4:10
             {
-                //bottleHeld = !bottleHeld;
-
-                /*if (bottleHeld == true)
-                {
-                    bottle.grabBottle();
-                    //Arrow.gameObject.SetActive(false);
-                }
-                else
-                {
-                    bottle.releaseBottle();
-                    //Arrow.gameObject.SetActive(true);
-                }*/
-                bottle.pouringScript.nextLiquid();
+                bottle.pouringScript.changeLiquid();
             }
         }
     }
@@ -142,11 +77,11 @@ public class Controller : MonoBehaviour
         }
         else if (score >= maxDiff)
         {
-            Score += minMoney;
+            Money += minMoney;
         }
         else
         {
-            Score += maxMoney - Mathf.FloorToInt( (score / maxDiff)*(maxMoney - minMoney) );
+            Money += maxMoney - Mathf.FloorToInt( (score / maxDiff)*(maxMoney - minMoney) );
         }
 
         Cup.reset();
@@ -156,7 +91,19 @@ public class Controller : MonoBehaviour
     public void newQuest()
     {
         goal = GoalsList[Random.Range(0, GoalsList.Length)];
+        textReset();
+    }
+
+    public void buyDrink(int i)
+    {
+        Money = bottleP.buyBottle(Money, i);
+
+        textReset();
+    }
+
+    private void textReset()
+    {
         goaltext.text = "Do: " + goal.ToString() + " wódka to juice ratio";
-        ScoreText.text = "Score: " + Score.ToString();
+        ScoreText.text = "Money: " + Money.ToString();
     }
 }

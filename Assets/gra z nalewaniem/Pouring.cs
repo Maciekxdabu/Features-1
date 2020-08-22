@@ -11,17 +11,31 @@ public class Pouring : MonoBehaviour
 
     public GameObject Drop;
 
-    public string[] liquidName;
-    public Sprite[] liquidSprite;
-    public Color[] liquidColor;
-    public float[] liquidSpeed;
+    public string liquidName;
+    public Sprite bottleSprite;
+    public Color liquidColor;
+    public float liquidSpeed;
+
+    public BottleStack[] bottleStacks;
+
+    public float remainingLiquid = 100;
+    public float liquidPerDrop = 0.075f;
 
     [Header("Do not change")]
-    public int currentLiquid = 0;
+    public int currentLiquid = 0;//current Stack
 
     void Start()
     {
         cooldown = dropCooldown;
+
+        bottleSprite = bottleStacks[currentLiquid].bottleSprite;
+        liquidColor = bottleStacks[currentLiquid].fluidColor;
+        liquidSpeed = bottleStacks[currentLiquid].fluidSpeed;
+        liquidName = bottleStacks[currentLiquid].fluidName;
+
+        remainingLiquid = bottleStacks[currentLiquid].frontLiquidValue;
+
+        GetComponent<SpriteRenderer>().sprite = bottleSprite;
     }
 
     void Update()
@@ -51,26 +65,76 @@ public class Pouring : MonoBehaviour
 
             if (cooldown < 0)
             {
-                GameObject drop = Instantiate(Drop, pourPosition, Quaternion.identity);
-                drop.GetComponent<DropScript>().dropColor = liquidColor[currentLiquid];
-                drop.GetComponent<DropScript>().speed = liquidSpeed[currentLiquid];
+                if (remainingLiquid > 0)
+                {
+                    GameObject drop = Instantiate(Drop, pourPosition, Quaternion.identity);
+                    drop.GetComponent<DropScript>().dropColor = liquidColor;
+                    drop.GetComponent<DropScript>().speed = liquidSpeed;
 
+                    remainingLiquid -= liquidPerDrop;
+                }
+                else if (bottleStacks[currentLiquid].bottlesNumber > 0)
+                {
+                    bottleStacks[currentLiquid].nextBottle();
+                    remainingLiquid = bottleStacks[currentLiquid].frontLiquidValue;
+                }
 
                 cooldown = dropCooldown;
             }
         }
     }
 
-    public void nextLiquid()
+    public void changeLiquid()
     {
+        bottleStacks[currentLiquid].putBottleAway(remainingLiquid);
+        bottleStacks[currentLiquid].release();
+
         currentLiquid += 1;
-        if (currentLiquid == liquidColor.Length)
+        if (currentLiquid == bottleStacks.Length)
         {
             currentLiquid = 0;
         }
 
-        GetComponent<SpriteRenderer>().sprite = liquidSprite[currentLiquid];
+        bottleSprite = bottleStacks[currentLiquid].bottleSprite;
+        liquidColor = bottleStacks[currentLiquid].fluidColor;
+        liquidSpeed = bottleStacks[currentLiquid].fluidSpeed;
+        liquidName = bottleStacks[currentLiquid].fluidName;
+
+        remainingLiquid = bottleStacks[currentLiquid].frontLiquidValue;
+        bottleStacks[currentLiquid].grab();
+
+        GetComponent<SpriteRenderer>().sprite = bottleSprite;
 
         GetComponent<BottleMovement>().resetRotation();
+    }
+
+    public void grabFromStack()
+    {
+        bottleStacks[currentLiquid].grab();
+    }
+
+    public void releaseFromStack()
+    {
+        bottleStacks[currentLiquid].putBottleAway(remainingLiquid);
+        bottleStacks[currentLiquid].release();
+    }
+
+    public int buyBottle(int m, int i)
+    {
+        if (bottleStacks[i].Price > m)
+        {
+            return m;
+        }
+        else
+        {
+            if (bottleStacks[i].addBottles(1) == true)
+            {
+                return m - bottleStacks[i].Price;
+            }
+            else
+            {
+                return m;
+            }
+        }
     }
 }
