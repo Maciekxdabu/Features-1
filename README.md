@@ -1,6 +1,7 @@
 # Features-1
 
 Wersja Unity: (2019.2.4f1, ta sama wersja co główny projekt)
+
 Notka: Każdy feature jest zamknięty w swoim obiekcie i wyłączenie/włączenie tych obiektów umożliwia wybranie/testowanie konkretnego feature'a
 
   **Feature 1**: Losowe postacie
