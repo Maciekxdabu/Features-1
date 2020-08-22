@@ -1,6 +1,6 @@
 # Features-1
 
-Wersja Unity: (2020.1.0f1)
+Wersja Unity: (2019.2.4f1, ta sama wersja co główny projekt)
 Notka: Każdy feature jest zamknięty w swoim obiekcie i wyłączenie/włączenie tych obiektów umożliwia wybranie/testowanie konkretnego feature'a
 
   **Feature 1**: Losowe postacie
@@ -14,13 +14,16 @@ PS. Po uruchomieniu można klikać lewym przyciskiem myszy żeby zobaczyć jak g
 
   **Feature 2**: Mini-Gra o nalewaniu napoju
   
-Aktualnie minigra opiera się na chwytaniu butelek myszką (lewym klawiszem), a następnie używanie klawiszy A i D, żeby kręcić butelką.
+W grze steruje się padem i można wybrać w obiekcie "Controller" jakim padem się steruję (aktualnie jest do wyboru pad od Xbox i PS4)
+
+Aktualnie minigra opiera się na chwytaniu butelek za pomocą LB, a następnie używanie triggerów, żeby kręcić butelką.
 Napój w kubku zmienia swój kolor w zależności od stosunku wódki i soku.
 Cel jest wypisany na ekranie (w formie stosunku wódki do soku) oraz wynik w formie pieniędzy jakie dostało się za sok.
-Aktualnie wylanie napoju poza kubek nie ma żadnych efektów ubocznych.
+Wylewanie napoju z butelki zawsze powoduje jego utratę, przez co trzeba uważać, aby za bardzo nie przelać.
 
-W butelkach można zmienić kolor płynu jaki się z nich wylewa (czyli zmienić na przykład typ soku)
-Ważne: Musi być zawsze butelka z kolorem białym (jest ona brana za wódkę)
+W stosach butelkach można zmienić kolor płynu jaki się w nich znajduje (czyli zmienić na przykład typ soku), następnie należy to podpiąć w obiekcie "Bottle" aby były możliwe do użycia
+W stosach można dokupywać butelki za odpowiednią cenę, ale nie więcej niż podany limit
+Ważne: Musi być zawsze stos butelek z kolorem białym (jest ona brana za wódkę)
 
 Większość wartości jest ustawiane w obiekcie "Controller":
 -*Goal List* - lista możliwych celów od klienta (w formie stosunku wódki do soku)
@@ -30,7 +33,20 @@ Większość wartości jest ustawiane w obiekcie "Controller":
 W obiekcie "Cup" można ustawić ile płynu jest warta jedna kropla (wartość: *Liquid Per Drop*)
 
 W obiektach "Bottle" można zmienić:
--*Liquid Color* - kolor płynu z butelki
--*Liquid Speed* - prędkość z jaką krople spadają
+(Skrypt Pouring)
+-*Liquid Per Drop* - ile płynu jest warta jedna kropla podczas wylewania z butelki
+-*Bottle Stacks* - Stacki butelek które się wybiera podczas nalewania
+(Skrypt Bottle Movement)
+-*Rotation Speed* - prędkość obrotu butelki podczas trzymania odpowiedniego klawisza
+-*Move Speed* - prędkość poruszania butelką po ekranie
+-*Wanka Speed* - prędkość z jaką butelka próbuje wrócić do pozycji pionowej (aktualnie butelka "prostuje" się tym szybciej im bardziej jest odchylona)
+
+W obiektach "Bottle Stacks" można zmienić:
+-*Bottles Number* - aktualna ilość butelek
+-*Max Bottles Number* - maksymalna ilość butelek w stosie
+-*Fron Liquid Value* - aktualna ilość płynu w butelce z przodu
+-różne wartości definiujące płyn: kolor, prędkość kropel, wygląd butelki, nazwa płynu (aktualnie nie jest ona nigdzie używana)
+-*Price* - cena za nową butelkę
 
 PS. Wynik zawsze wynosi 0 jeżeli nalejemy mniej niż 50% kubka
+PS. Aktualnie dodawanie nowego rodzaju soku niewiele daje, pod tym kontekstem, że wynik liczę ze stosunku wódki do aktualnego zapełnienia szklanki, tak więc rodzaje soku na razie ie mają znaczenia (sprawa jest do dyskusji)
