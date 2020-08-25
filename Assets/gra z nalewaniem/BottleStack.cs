@@ -76,6 +76,9 @@ public class BottleStack : MonoBehaviour
         resetFrontFluid();
 
         QuantityText.text = bottlesNumber + "/" + MaxBottlesNumber;
+
+        fluid2.transform.localPosition = Vector3.up * maxHeight;
+        fluid3.transform.localPosition = Vector3.up * maxHeight;
     }
 
     void Update()

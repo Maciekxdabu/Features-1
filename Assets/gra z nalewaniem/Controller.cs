@@ -14,12 +14,12 @@ public class Controller : MonoBehaviour
     public GamePad gamePad = GamePad.PS4;
 
     public float []GoalsList;
-
+    [Tooltip("Money to get for the best score")]
     public int maxMoney;
+    [Tooltip("Money to get for worst score")]
     public int minMoney;
     [Tooltip("Maximum difference of goal ratio and player ratio (after it there is only minimal wage)")]
     public float maxDiff;
-    public float arrowDisplacement;
 
     public TextMesh goaltext;
     public TextMesh ScoreText;
@@ -34,7 +34,6 @@ public class Controller : MonoBehaviour
     public int Money = 0;
 
     private bool gameOn = false;
-    private bool JoystickArrowPressed = false;
 
     void Start()
     {

@@ -710,7 +710,7 @@ MonoBehaviour:
   fluid3: {fileID: 4422856927495418751}
   QuantityText: {fileID: 1001702012014677370}
   minHeight: -19.6
-  maxHeight: -2
+  maxHeight: -0.6
 --- !u!1 &4418572443680220836
 GameObject:
   m_ObjectHideFlags: 0

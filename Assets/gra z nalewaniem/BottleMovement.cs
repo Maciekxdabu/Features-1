@@ -5,12 +5,20 @@ using UnityEngine;
 public class BottleMovement : MonoBehaviour
 {
     public bool toggle = false;
+    [Tooltip("Speed with which bottle is rotated")]
     public float rotationSpeed;
+    [Tooltip("Speed with which bottle is moved on the screen")]
     public float moveSpeed;
+    [Tooltip("Speed with which the bottle rotates to vertical position (the bigger the distance the stronger the pull)")]
     public float wankaSpeed;
+    [Tooltip("Speed with which the bottle rotates to vertical position (constant speed)")]
+    public float wankaSpeed2;
+    [Tooltip("0 - First option (firts speed), other numbers - second option (second speed)")]
+    public int WankaMode = 0;
 
     public Pouring pouringScript;
     public Controller controller;
+    public SpriteRenderer liquid;
 
     private Vector3 homeP;
     private Quaternion homeR;
@@ -21,6 +29,7 @@ public class BottleMovement : MonoBehaviour
         homeR = transform.rotation;
 
         GetComponent<SpriteRenderer>().enabled = false;
+        liquid.enabled = false;
     }
 
     void Update()
@@ -53,7 +62,17 @@ public class BottleMovement : MonoBehaviour
                 transform.Rotate(Vector3.back * direction * rotationSpeed * Time.deltaTime);
             }
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * wankaSpeed);
+            if (WankaMode == 0)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * wankaSpeed);
+            }
+            else
+            {
+                float ratio = wankaSpeed2 * Time.deltaTime / Quaternion.Angle(transform.rotation, Quaternion.identity);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, ratio);
+            }
+            
+            pouringScript.adjustLiquid();
         }
     }
     
@@ -74,6 +93,7 @@ public class BottleMovement : MonoBehaviour
         pouringScript.grabFromStack();
 
         GetComponent<SpriteRenderer>().enabled = true;
+        liquid.enabled = true;
     }
 
     public void releaseBottle()
@@ -83,6 +103,7 @@ public class BottleMovement : MonoBehaviour
         pouringScript.releaseFromStack();
 
         GetComponent<SpriteRenderer>().enabled = false;
+        liquid.enabled = false;
 
         resetTransform();
     }
