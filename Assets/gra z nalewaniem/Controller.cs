@@ -10,6 +10,8 @@ public class Controller : MonoBehaviour
         PS4
     }
 
+    public static Controller controler;
+
     [Tooltip("GamePad to controll with")]
     public GamePad gamePad = GamePad.PS4;
 
@@ -37,6 +39,8 @@ public class Controller : MonoBehaviour
 
     void Start()
     {
+        controler = this;
+
         newQuest();
     }
 
@@ -47,6 +51,7 @@ public class Controller : MonoBehaviour
             if (gameOn == false)
             {
                 bottle.grabBottle();
+                Cup.reset();
                 gameOn = true;
             }
             else
@@ -104,5 +109,10 @@ public class Controller : MonoBehaviour
     {
         goaltext.text = "Do: " + goal.ToString() + " wódka to juice ratio";
         ScoreText.text = "Money: " + Money.ToString();
+    }
+
+    public bool isGameOn()
+    {
+        return gameOn;
     }
 }

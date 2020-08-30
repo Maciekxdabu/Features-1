@@ -62,18 +62,21 @@ public class Pouring : MonoBehaviour
 
         float fluidLevel = liquid.transform.position.y + liquid.size.y / 2 * liquid.transform.lossyScale.y;
 
-        foreach (Transform position in pourPoints)
+        if (Controller.controler.isGameOn() == true)
         {
-            if (position.position.y < fluidLevel)
+            foreach (Transform position in pourPoints)
             {
-                if (is_Pouring == false)
+                if (position.position.y < fluidLevel)
                 {
-                    pourPosition = position.position;
-                    is_Pouring = true;
-                }
-                else if (pourPosition.y > position.position.y)
-                {
-                    pourPosition = position.position;
+                    if (is_Pouring == false)
+                    {
+                        pourPosition = position.position;
+                        is_Pouring = true;
+                    }
+                    else if (pourPosition.y > position.position.y)
+                    {
+                        pourPosition = position.position;
+                    }
                 }
             }
         }

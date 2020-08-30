@@ -54,3 +54,16 @@ W obiektach "Bottle Stacks" można zmienić:
 
 PS. Wynik zawsze wynosi 0 jeżeli nalejemy mniej niż 50% kubka  
 PS. Aktualnie dodawanie nowego rodzaju soku niewiele daje, pod tym kontekstem, że wynik liczę ze stosunku wódki do aktualnego zapełnienia szklanki, tak więc rodzaje soku na razie nie mają znaczenia (sprawa jest do dyskusji)
+
+## **Feature 3**: System ekwipunku
+
+-Aktualnie system opiera się tylko na przechowywaniu i wyświetlaniu przedmiotów w posiadaniu gracza  
+-Opiera się to na tworzeniu assetów typu Item (ScriptableObject) i dodawaniu ich do plecaka  
+Notka: Przedmioty w ilości 0 są traktowane jako nieposiadane i nie są wyświetlane  
+-Aktualnie na informacje o przedmiocie składają się:  
+--W assecie: nazwa, sprite, typ (składnik, quest, inne)  
+--W plecaku: ilość
+
+W klasie jest zmienna statyczna która jest referencją do obiektu plecaka, co powoduje, że można się dostać do plecaka z dowolnego miejsca w projekcie, bez potrzeby wrzucania referencji w skrypty (Ważne: Działa to poprawnie jeżeli istnieje tylko jeden obiekt z tym skryptem)
+
+PS. System posiada już funkcje dodawania oraz używania przedmiotów, ale na razie nie ma z czym tego sprawdzić
