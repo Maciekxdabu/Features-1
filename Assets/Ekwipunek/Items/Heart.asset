@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Heart
   sprite: {fileID: 21300000, guid: 3e144c297eec7f646967684490404635, type: 3}
   type: 2
+  Description: A heart for you.

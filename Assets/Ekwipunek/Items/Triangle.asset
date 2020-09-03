@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Triangle
   sprite: {fileID: 21300000, guid: eb18d57a40b1c7d4d989cc56fe22050e, type: 3}
   type: 0
+  Description: Pitagoras would be proud.

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ItemLoad : MonoBehaviour
 {
-    public Item item;
-    public int quantity;
+    //public Item item;
+    //public int quantity;
 
     public Text text;
     public Image image;
@@ -14,9 +14,7 @@ public class ItemLoad : MonoBehaviour
 
     void Start()
     {
-        text.text = item.name;
-        image.sprite = item.sprite;
-        Qtext.text = quantity.ToString();
+        //LoadData();
     }
 
     // Update is called once per frame
@@ -25,8 +23,10 @@ public class ItemLoad : MonoBehaviour
         
     }
 
-    /*public void LoadData()
+    public void LoadData(Backpack.SItem item)
     {
-
-    }*/
+        text.text = item.item.name;
+        image.sprite = item.item.sprite;
+        Qtext.text = item.quantity.ToString();
+    }
 }

@@ -27,13 +27,39 @@ public class Controler : MonoBehaviour
 
         if (Backpack.backpack.isDisplayed() == true)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 Backpack.backpack.changeCategory(1);
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.A))
             {
                 Backpack.backpack.changeCategory(-1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Backpack.backpack.changeItem(0);
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                Backpack.backpack.changeItem(1);
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Backpack.backpack.changeItem(2);
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                Backpack.backpack.changeItem(3);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Backpack.backpack.changePage(-1);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Backpack.backpack.changePage(1);
             }
         }
     }

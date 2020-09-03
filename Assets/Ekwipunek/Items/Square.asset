@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Square
   sprite: {fileID: 21300000, guid: 40486fe3ec0866247ac46182625e0527, type: 3}
   type: 0
+  Description: If you turn it over, it is still the same.

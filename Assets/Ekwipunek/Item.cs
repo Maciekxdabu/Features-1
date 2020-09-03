@@ -15,6 +15,8 @@ public class Item : ScriptableObject
     public string Name;
     public Sprite sprite;
     public Type type;
+    [TextArea]
+    public string Description;
     //public int quantity;
     //public int ID;
     //public static int curID = 0;
