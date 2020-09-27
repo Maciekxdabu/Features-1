@@ -14,6 +14,7 @@ public class Pouring : MonoBehaviour
 
     public string liquidName;
     public Sprite bottleSprite;
+    public Sprite bottleMask;
     public Color liquidColor;
     public float liquidSpeed;
 
@@ -42,17 +43,24 @@ public class Pouring : MonoBehaviour
         cooldown = dropCooldown;
 
         bottleSprite = bottleStacks[currentLiquid].bottleSprite;
+        bottleMask = bottleStacks[currentLiquid].bottleMask;
         liquidColor = bottleStacks[currentLiquid].fluidColor;
         liquidSpeed = bottleStacks[currentLiquid].fluidSpeed;
         liquidName = bottleStacks[currentLiquid].fluidName;
+        a = bottleStacks[currentLiquid].a * transform.localScale.x;
+        b = bottleStacks[currentLiquid].b * transform.localScale.y;
+        RectPosition.localPosition = bottleStacks[currentLiquid].localRectangePosition;
+        for (int i=0; i<pourPoints.Length; i++)
+        {
+            pourPoints[i].localPosition = bottleStacks[currentLiquid].pourPointsPosition[i];
+        }
+
         liquid.color = liquidColor;
 
         remainingLiquid = bottleStacks[currentLiquid].frontLiquidValue;
 
         GetComponent<SpriteRenderer>().sprite = bottleSprite;
-
-        a *= transform.localScale.x;
-        b *= transform.localScale.y;
+        GetComponent<SpriteMask>().sprite = bottleMask;
     }
 
     void Update()
@@ -118,15 +126,25 @@ public class Pouring : MonoBehaviour
         }
 
         bottleSprite = bottleStacks[currentLiquid].bottleSprite;
+        bottleMask = bottleStacks[currentLiquid].bottleMask;
         liquidColor = bottleStacks[currentLiquid].fluidColor;
         liquidSpeed = bottleStacks[currentLiquid].fluidSpeed;
         liquidName = bottleStacks[currentLiquid].fluidName;
+        a = bottleStacks[currentLiquid].a * transform.localScale.x;
+        b = bottleStacks[currentLiquid].b * transform.localScale.y;
+        RectPosition.localPosition = bottleStacks[currentLiquid].localRectangePosition;
+        for (int i = 0; i < pourPoints.Length; i++)
+        {
+            pourPoints[i].localPosition = bottleStacks[currentLiquid].pourPointsPosition[i];
+        }
+
         liquid.color = liquidColor;
 
         remainingLiquid = bottleStacks[currentLiquid].frontLiquidValue;
         bottleStacks[currentLiquid].grab();
 
         GetComponent<SpriteRenderer>().sprite = bottleSprite;
+        GetComponent<SpriteMask>().sprite = bottleMask;
 
         GetComponent<BottleMovement>().resetRotation();
     }
@@ -199,7 +217,7 @@ public class Pouring : MonoBehaviour
                 }
                 else if (curArea >= (a * b) - TArea)//higher triangle
                 {
-                    curArea = a * b - curArea;
+                    curArea = Mathf.Clamp(a * b - curArea, 0, a * b);
                     height = Mathf.Sqrt(2 * curArea / Mathf.Tan(angle)) * Mathf.Sin(angle);
                     height = ((a * Mathf.Sin(angle)) + (a * b - 2 * TArea) / (a / Mathf.Cos(angle)) / 2) - height;
                     Tpart = "higher triangle";
@@ -229,7 +247,7 @@ public class Pouring : MonoBehaviour
                 }
                 else if (curArea >= (a * b) - TArea)//higher triangle
                 {
-                    curArea = a * b - curArea;
+                    curArea = Mathf.Clamp(a * b - curArea, 0, a * b);
                     height = Mathf.Sqrt(2 * curArea * Mathf.Tan(angle)) * Mathf.Cos(angle);
                     height = ((b * Mathf.Cos(angle)) + (a * b - TArea * 2) / (b / Mathf.Sin(angle)) / 2) - height;
                     Tpart = "higher triangle";

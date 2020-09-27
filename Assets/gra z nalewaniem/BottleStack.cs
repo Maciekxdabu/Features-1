@@ -10,11 +10,18 @@ public class BottleStack : MonoBehaviour
     public float frontLiquidValue;// min 0, max 100
     public bool isHeld = false;
 
-    [Header("Fluid values")]
+    [Header("Fluid and bottle values")]
     public string fluidName;
     public Color fluidColor;
     public float fluidSpeed;
     public Sprite bottleSprite;
+    public Sprite bottleMask;
+    [Tooltip("Dimensions of a rectangle than contain the liquid (shorter)")]
+    public float a;
+    [Tooltip("Dimensions of a rectangle than contain the liquid (longer)")]
+    public float b;
+    public Vector3 localRectangePosition;
+    public Vector3[] pourPointsPosition;
 
     [Header("Price of a new bottle")]
     public int Price = 5;
@@ -33,8 +40,10 @@ public class BottleStack : MonoBehaviour
 
     public TextMesh QuantityText;
 
-    [Header("Probably not to edit")]
+    [Header("Fluid position values")]
+    [Tooltip("Minimum value of y of fluid (when it is at its lowest")]
     public float minHeight;
+    [Tooltip("Maximum value of y of fluid (when it is at its highest")]
     public float maxHeight;
 
 
@@ -43,6 +52,9 @@ public class BottleStack : MonoBehaviour
         bottle1.GetComponent<SpriteRenderer>().sprite = bottleSprite;
         bottle2.GetComponent<SpriteRenderer>().sprite = bottleSprite;
         bottle3.GetComponent<SpriteRenderer>().sprite = bottleSprite;
+        bottle1.GetComponent<SpriteMask>().sprite = bottleMask;
+        bottle2.GetComponent<SpriteMask>().sprite = bottleMask;
+        bottle3.GetComponent<SpriteMask>().sprite = bottleMask;
 
         fluid1.color = fluidColor;
         fluid2.color = fluidColor;

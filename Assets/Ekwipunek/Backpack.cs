@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /*[System.Serializable]
 public class SItem
@@ -37,6 +38,8 @@ public class Backpack : MonoBehaviour
     public Image Background;
     public Transform Selection;
     public ItemLoaderDescription DescriptionItem;
+    public GameObject ArrowRight;
+    public GameObject ArrowLeft;
 
     public bool displayed = false;
     public Category category = Category.All;
@@ -56,36 +59,22 @@ public class Backpack : MonoBehaviour
     public float DistanceVer;
 
     private List<GameObject> Tiles = new List<GameObject>();
+    private GameObject lastSelected;
+    private GameObject nextSelection;
     
     void Start()
     {
         backpack = this;
 
         CatText.text = category.ToString();
-        CatText.enabled = false;
         PageText.text = "0/0";
-        PageText.enabled = false;
-        Background.enabled = false;
 
         ItemsPerPage = ItemsPerRow * ItemsPerColumn;
 
-        Selection.position = itemList.position;
-
         generateTiles();
-        //makeCurrentList();
+        nextSelection = Tiles[0];
+        Hide();
         refreshView(true);
-
-        /*foreach (SItem it in Items)
-        {
-            Quantities.Add(0);
-        }*/
-
-        //Display();
-    }
-
-    void Update()
-    {
-        
     }
 
     public bool addItem(Item item, int quan)
@@ -153,13 +142,32 @@ public class Backpack : MonoBehaviour
     public void Display()
     {
         displayed = true;
+
+        CatText.enabled = true;
+        PageText.enabled = true;
+        Background.enabled = true;
+        DescriptionItem.gameObject.SetActive(true);
+        ArrowLeft.SetActive(true);
+        ArrowRight.SetActive(true);
+
         refreshView(false);
+        EventSystem.current.SetSelectedGameObject(Tiles[0]);
+        lastSelected = Tiles[0];
     }
 
     public void Hide()
     {
         displayed = false;
+
+        CatText.enabled = false;
+        PageText.enabled = false;
+        Background.enabled = false;
+        DescriptionItem.gameObject.SetActive(false);
+        ArrowLeft.SetActive(false);
+        ArrowRight.SetActive(false);
+
         refreshView(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public bool isDisplayed()
@@ -201,8 +209,6 @@ public class Backpack : MonoBehaviour
     //generates tiles to displaye items
     private void generateTiles()
     {
-        //DestroyTiles();
-
         Vector3 curPos = itemList.transform.position;
 
         for (int i=0; i<ItemsPerPage; i++)
@@ -211,7 +217,7 @@ public class Backpack : MonoBehaviour
             curPos.y = itemList.transform.position.y - DistanceVer * Mathf.Floor(i / ItemsPerRow);
 
             GameObject temp = Instantiate(ItemPref, curPos, Quaternion.identity, itemList.transform);
-            //temp.SetActive(false);
+            temp.GetComponent<ItemSelectionEvent>().numberSelected = i;
             Tiles.Add(temp);
             temp.SetActive(false);
         }
@@ -235,49 +241,46 @@ public class Backpack : MonoBehaviour
     //use when changing category or adding/removing items
     public void makeCurrentList()
     {
-        //if (displayed == true)
-        //{
-            currentList.Clear();
+        currentList.Clear();
 
-            Item.Type curType = Item.Type.other;
-            switch (category)
-            {
-                case Category.All:
-                    break;
-                case Category.Ingredient:
-                    curType = Item.Type.ingredient;
-                    break;
-                case Category.Other:
-                    curType = Item.Type.other;
-                    break;
-                case Category.Quest:
-                    curType = Item.Type.quest;
-                    break;
-                default:
-                    break;
-            }
+        Item.Type curType = Item.Type.other;
+        switch (category)
+        {
+            case Category.All:
+                break;
+            case Category.Ingredient:
+                curType = Item.Type.ingredient;
+                break;
+            case Category.Other:
+                curType = Item.Type.other;
+                break;
+            case Category.Quest:
+                curType = Item.Type.quest;
+                break;
+            default:
+                break;
+        }
 
-            if (category == Category.All)
+        if (category == Category.All)
+        {
+            for (int i = 0; i < Items.Count; i++)
             {
-                for (int i = 0; i < Items.Count; i++)
+                if (Items[i].quantity > 0)
                 {
-                    if (Items[i].quantity > 0)
-                    {
-                        currentList.Add(i);
-                    }
+                    currentList.Add(i);
                 }
             }
-            else
+        }
+        else
+        {
+            for (int i = 0; i < Items.Count; i++)
             {
-                for (int i = 0; i < Items.Count; i++)
+                if (curType == Items[i].item.type && Items[i].quantity > 0)
                 {
-                    if (curType == Items[i].item.type && Items[i].quantity > 0)
-                    {
-                        currentList.Add(i);
-                    }
+                    currentList.Add(i);
                 }
             }
-        //}
+        }
     }
 
     /// <summary>
@@ -292,7 +295,6 @@ public class Backpack : MonoBehaviour
             curPage = 0;
             maxPages = (int)Mathf.Ceil(currentList.Count * 1.0f / ItemsPerPage);
             chosen_item = 0;
-            Selection.position = itemList.position + new Vector3((chosen_item % ItemsPerRow) * DistanceHor, Mathf.Floor(chosen_item / ItemsPerColumn) * DistanceVer * -1, 0);
 
             PageText.text = "1/" + maxPages.ToString();
 
@@ -302,12 +304,6 @@ public class Backpack : MonoBehaviour
             }
         }
 
-        CatText.enabled = false;
-        PageText.enabled = false;
-        Background.enabled = false;
-        Selection.gameObject.SetActive(false);
-        DescriptionItem.gameObject.SetActive(false);
-
         foreach (GameObject ob in Tiles)
         {
             ob.SetActive(false);
@@ -315,11 +311,6 @@ public class Backpack : MonoBehaviour
 
         if (displayed == true)
         {
-            CatText.enabled = true;
-            PageText.enabled = true;
-            Background.enabled = true;
-            Selection.gameObject.SetActive(true);
-            DescriptionItem.gameObject.SetActive(true);
 
             int count = 0;//tracks position on current page (from 0 to ItemsPerPage)
             for (int i = ItemsPerPage * curPage; i < Mathf.Min(currentList.Count, ItemsPerPage * (curPage + 1)); i++)
@@ -329,74 +320,42 @@ public class Backpack : MonoBehaviour
 
                 count++;
             }
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(lastSelected);
+            lastSelected = Tiles[0];
         }
     }
 
-    //0 - up, 1 - right, 2 - down, 3 - left
-    public void changeItem(int direction)
+    //function meant for item buttons
+    public void SelectChosen(int n)
     {
-        direction = Mathf.Clamp(direction, 0, 3);
+        chosen_item = n;
 
-        switch (direction)
-        {
-            case 0:
-                chosen_item -= ItemsPerRow;
-                if (chosen_item < 0)
-                {
-                    /*chosen_item = chosen_item + (int)Mathf.Ceil(currentList.Count / ItemsPerRow) * ItemsPerRow;
-                    if (chosen_item >= currentList.Count)
-                    {
-                        chosen_item -= ItemsPerRow;
-                    }*/
+        refreshDescription();
+    }
 
-                    int temp = currentList.Count - (ItemsPerPage * curPage) - 1;
-                    chosen_item = Mathf.Min(temp, ItemsPerPage - 1);//TO DO (straight)
-                }
-                break;
-            case 1:
-                chosen_item++;
-                if (chosen_item > Mathf.Min(currentList.Count - (ItemsPerPage * curPage) - 1, ItemsPerPage - 1))
-                {
-                    chosen_item = 0;
-                }
-                break;
-            case 2:
-                chosen_item += ItemsPerRow;
-                if (chosen_item > Mathf.Min(currentList.Count - (ItemsPerPage * curPage) - 1, ItemsPerPage - 1))
-                {
-                    chosen_item = 0;//TO DO (straight)
-                }
-                break;
-            case 3:
-                chosen_item--;
-                if (chosen_item < 0)
-                {
-                    int temp = currentList.Count - (ItemsPerPage * curPage) - 1;
-                    chosen_item = Mathf.Min(temp, ItemsPerPage - 1);
-                }
-                break;
-            default:
-                Debug.Log("Error with direction value in backpack");
-                break;
-        }
-
+    public void refreshDescription()
+    {
         DescriptionItem.LoadData(Items[currentList[chosen_item + (curPage * ItemsPerPage)]].item);
-        Selection.position = itemList.position + new Vector3((chosen_item % ItemsPerRow) * DistanceHor, Mathf.Floor(chosen_item / ItemsPerColumn) * DistanceVer * -1, 0);
     }
 
     //changes page (values only -1, 0, 1)
+    //function meant for arrow buttons
     public void changePage(int change)
     {
         change = Mathf.Clamp(change, -1, 1);
         switch (change)
         {
             case -1:
+                lastSelected = ArrowLeft;
                 if (curPage > 0)
                 {
                     curPage--;
                 }
                 break;
             case 1:
+                lastSelected = ArrowRight;
                 if (currentList.Count > (curPage + 1) * ItemsPerPage)
                 {
                     curPage++;

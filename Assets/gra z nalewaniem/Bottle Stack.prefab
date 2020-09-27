@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 610530725608439047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.313, y: -0.117, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 2837020341025581339}
   m_Father: {fileID: 5720913006945935139}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: -504131773
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5498c2ad361122c46bfb55e8a222bfcf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04d7102281d5b574cb0d32d77032ab6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,7 +120,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 704ca64f96f211f48bb37a5f681bb174, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c842c0bcaeeda5438aa87e07d869109, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -504131773
   m_BackSortingLayerID: -504131773
@@ -157,7 +157,7 @@ Transform:
   m_GameObject: {fileID: 909992847265002140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.27999985, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 2621676402377726148}
   m_Father: {fileID: 5720913006945935139}
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_SortingLayerID: -504131773
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 5498c2ad361122c46bfb55e8a222bfcf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04d7102281d5b574cb0d32d77032ab6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -250,7 +250,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 704ca64f96f211f48bb37a5f681bb174, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c842c0bcaeeda5438aa87e07d869109, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -504131773
   m_BackSortingLayerID: -504131773
@@ -449,7 +449,7 @@ Transform:
   m_GameObject: {fileID: 4002275107087908358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.271, y: -0.251, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 8586324789425259280}
   m_Father: {fileID: 5720913006945935139}
@@ -493,7 +493,7 @@ SpriteRenderer:
   m_SortingLayerID: -504131773
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 5498c2ad361122c46bfb55e8a222bfcf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04d7102281d5b574cb0d32d77032ab6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -542,7 +542,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 704ca64f96f211f48bb37a5f681bb174, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c842c0bcaeeda5438aa87e07d869109, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -504131773
   m_BackSortingLayerID: 0
@@ -699,6 +699,13 @@ MonoBehaviour:
   fluidColor: {r: 1, g: 1, b: 1, a: 1}
   fluidSpeed: 5
   bottleSprite: {fileID: 0}
+  bottleMask: {fileID: 0}
+  a: 0
+  b: 0
+  localRectangePosition: {x: 0, y: 0, z: 0}
+  pourPointsPosition:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   Price: 5
   whenShowSecond: 2
   whenShowThird: 3
