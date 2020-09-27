@@ -6626,13 +6626,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Controls:
-
-    I - Open/Close inventory
-
-    A/D - change current category
-
-    Arrows/Stick - change selected Item'
+  m_Text: "Controls:\n(Xbox) Back (PS4) Options - Open/Close inventory\nBumpers (L1/R1)
+    - change current category\nArrows/WSAD/Stick - change selected Item\n\nKlikni\u0119cie
+    na strza\u0142kach powoduje zmian\u0119 strony"
 --- !u!222 &820494524
 CanvasRenderer:
   m_ObjectHideFlags: 0
