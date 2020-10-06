@@ -9,8 +9,8 @@ public class ItemLoad : MonoBehaviour
     //public int quantity;
 
     public Text text;
-    public Image image;
-    public Text Qtext;
+    //public Image image;
+    //public Text Qtext;
 
     void Start()
     {
@@ -25,8 +25,8 @@ public class ItemLoad : MonoBehaviour
 
     public void LoadData(Backpack.SItem item)
     {
-        text.text = item.item.name;
-        image.sprite = item.item.sprite;
-        Qtext.text = item.quantity.ToString();
+        text.text = item.quantity.ToString() + "x " + item.item.name;
+        //image.sprite = item.item.sprite;
+        //Qtext.text = item.quantity.ToString();
     }
 }

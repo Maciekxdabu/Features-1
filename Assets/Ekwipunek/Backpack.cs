@@ -49,13 +49,12 @@ public class Backpack : MonoBehaviour
     public List<int> currentList;//list of currently displayed items
 
     public List<SItem> Items;
-    //public int money;
 
-    public int ItemsPerRow;
-    public int ItemsPerColumn;
-    private int ItemsPerPage;
+    //public int ItemsPerRow;
+    //public int ItemsPerColumn;
+    public int ItemsPerPage;
 
-    public float DistanceHor;
+    //public float DistanceHor;
     public float DistanceVer;
 
     private List<GameObject> Tiles = new List<GameObject>();
@@ -69,7 +68,8 @@ public class Backpack : MonoBehaviour
         CatText.text = category.ToString();
         PageText.text = "0/0";
 
-        ItemsPerPage = ItemsPerRow * ItemsPerColumn;
+        //ItemsPerPage = ItemsPerRow * ItemsPerColumn;
+        //ItemsPerPage = ItemsPerColumn;
 
         generateTiles();
         nextSelection = Tiles[0];
@@ -213,8 +213,8 @@ public class Backpack : MonoBehaviour
 
         for (int i=0; i<ItemsPerPage; i++)
         {
-            curPos.x = itemList.transform.position.x + DistanceHor * (i % ItemsPerRow);
-            curPos.y = itemList.transform.position.y - DistanceVer * Mathf.Floor(i / ItemsPerRow);
+            //curPos.x = itemList.transform.position.x + DistanceHor * (i % ItemsPerRow);
+            curPos.y = itemList.transform.position.y - DistanceVer * i;
 
             GameObject temp = Instantiate(ItemPref, curPos, Quaternion.identity, itemList.transform);
             temp.GetComponent<ItemSelectionEvent>().numberSelected = i;
