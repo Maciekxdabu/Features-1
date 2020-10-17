@@ -27,7 +27,7 @@ public class Controler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown( gamePad == GamePad.Xbox ? KeyCode.JoystickButton6 : KeyCode.JoystickButton9))
+        if (Input.GetKeyDown( gamePad == GamePad.Xbox ? KeyCode.JoystickButton6 : KeyCode.JoystickButton9))//opening/closing inventory
         {
             if (Backpack.backpack.isDisplayed() == false)
             {
@@ -41,15 +41,17 @@ public class Controler : MonoBehaviour
             }
         }
 
-        if (Backpack.backpack.isDisplayed() == true)
+        if (Backpack.backpack.isDisplayed() == true)//changing category
         {
             if (Input.GetKeyDown(KeyCode.JoystickButton5))
             {
-                Backpack.backpack.changeCategory(1);
+                //Backpack.backpack.changeCategory(1);
+                Backpack.backpack.changePage(1);
             }
             if (Input.GetKeyDown(KeyCode.JoystickButton4))
             {
-                Backpack.backpack.changeCategory(-1);
+                //Backpack.backpack.changeCategory(-1);
+                Backpack.backpack.changePage(-1);
             }
         }
     }

@@ -27,6 +27,11 @@ public class TileGenerator : MonoBehaviour
 
     public List<Text> ingredientsTexts;
     public Text mainCount;
+    public Image ShopOverlay;
+
+    [Header("Do not modify")]
+    [SerializeField]
+    private bool Visible = false;
 
     void Start()
     {
@@ -54,7 +59,54 @@ public class TileGenerator : MonoBehaviour
 
         mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
 
-        GenerateGrid(true);
+        Hide();
+        GenerateGrid();
+    }
+
+    public void HideReveal()
+    {
+        if (Visible == true)//Hide
+        {
+            foreach (TileData tile in TileData.tilesList)
+            {
+                if (tile.used == false)
+                {
+                    ingredientIndexes.Add(tile.ingredientIndex);
+                }
+            }
+
+            Hide();
+        }
+        else//Reveal
+        {
+            if (ingredientIndexes.Count < TileData.tilesList.Count)
+            {
+                Debug.LogWarning("There are no enough ingredients to fill the pot, you need at least 61");
+                return;
+            }
+
+            Visible = true;
+            ShopOverlay.enabled = true;
+
+            foreach (TileData tile in TileData.tilesList)
+            {
+                tile.gameObject.SetActive(true);
+            }
+
+            GenerateGrid();
+        }
+    }
+
+    private void Hide()
+    {
+        Visible = false;
+        ShopOverlay.enabled = false;
+
+        foreach (TileData tile in TileData.tilesList)
+        {
+            tile.Use();
+            tile.gameObject.SetActive(false);
+        }
     }
 
     private int getIndex(Ingredient item)
@@ -70,30 +122,34 @@ public class TileGenerator : MonoBehaviour
         return -1;
     }
 
-    public void GenerateGrid(bool first=false)
+    public void GenerateGrid()
     {
-        if (first == false)
+        if (Visible == true)
         {
-            for (int i=0; i<TileData.tilesList.Count; i++)
+            foreach (TileData tile in TileData.tilesList)
             {
-                ingredientIndexes.Add(TileData.tilesList[i].ingredientIndex);
+                if (tile.used == false)
+                {
+                    ingredientIndexes.Add(tile.ingredientIndex);
+                    tile.Use();
+                }
             }
-        }
 
-        List<TileData> TilesPool = new List<TileData>(TileData.tilesList);
+            List<TileData> TilesPool = new List<TileData>(TileData.tilesList);
 
-        if (ingredientIndexes.Count >= TileData.tilesList.Count)
-        {
-            while (TilesPool.Count > 0)
+            if (ingredientIndexes.Count >= TileData.tilesList.Count)
             {
-                int randomTile = Random.Range(0, TilesPool.Count);
-                int randomIngredientIndex = Random.Range(0, ingredientIndexes.Count);
-                int randomIngredient = ingredientIndexes[randomIngredientIndex];
+                while (TilesPool.Count > 0)
+                {
+                    int randomTile = Random.Range(0, TilesPool.Count);
+                    int randomIngredientIndex = Random.Range(0, ingredientIndexes.Count);
+                    int randomIngredient = ingredientIndexes[randomIngredientIndex];
 
-                TilesPool[randomTile].changeIngredient(ingredients[randomIngredient], randomIngredient);
+                    TilesPool[randomTile].changeIngredient(ingredients[randomIngredient], randomIngredient);
 
-                TilesPool.RemoveAt(randomTile);
-                ingredientIndexes.RemoveAt(randomIngredientIndex);
+                    TilesPool.RemoveAt(randomTile);
+                    ingredientIndexes.RemoveAt(randomIngredientIndex);
+                }
             }
         }
     }
@@ -124,46 +180,81 @@ public class TileGenerator : MonoBehaviour
 
     public void AddIngredient(Ingredient ing, int quantity)
     {
-        int index = getIndex(ing);
-
-        if (index != -1)
-        {
-            while (ingredientIndexes.Count < maxIngredients)
-            {
-                ingredientIndexes.Add(index);
-
-                mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
-                ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
-            }
-        }
-    }
-
-    public void AddIngredient(Ingredient ing)
-    {
-        if (ingredientIndexes.Count < maxIngredients)
+        if (Visible == false)
         {
             int index = getIndex(ing);
 
             if (index != -1)
             {
-                ingredientIndexes.Add(index);
+                while (ingredientIndexes.Count < maxIngredients)
+                {
+                    ingredientIndexes.Add(index);
 
-                mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
-                ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                    mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
+                    ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                }
             }
         }
     }
 
+    //used in a button
+    public void AddIngredient(Ingredient ing)
+    {
+        if (Visible == false)
+        {
+            if (ingredientIndexes.Count < maxIngredients)
+            {
+                int index = getIndex(ing);
+
+                if (index != -1)
+                {
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        for (int i=0; i<10; i++)
+                        {
+                            if (ingredientIndexes.Count < maxIngredients)
+                                ingredientIndexes.Add(index);
+                            else
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        ingredientIndexes.Add(index);
+                    }
+                    
+
+                    mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
+                    ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                }
+            }
+        }
+    }
+
+    //used in a button
     public void SubtractIngredient(Ingredient ing)
     {
-        int index = getIndex(ing);
-        
-        if (index != -1)
+        if (Visible == false)
         {
-            ingredientIndexes.Remove(index);
+            int index = getIndex(ing);
 
-            mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
-            ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+            if (index != -1)
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        ingredientIndexes.Remove(index);
+                    }
+                }
+                else
+                {
+                    ingredientIndexes.Remove(index);
+                }
+
+                mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
+                ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+            }
         }
     }
 }

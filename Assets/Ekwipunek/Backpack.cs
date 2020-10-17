@@ -20,29 +20,16 @@ public class Backpack : MonoBehaviour
         public int quantity;
     }
 
-    private int CatNumber = 4;
-    public enum Category
-    {
-        All = 0,
-        Ingredient = 1,
-        Quest = 2,
-        Other = 3
-    }
-
     public static Backpack backpack = null;
 
     public Transform itemList;
     public GameObject ItemPref;
-    public Text CatText;
     public Text PageText;
-    public Image Background;
+    public GameObject Background;
     public Transform Selection;
     public ItemLoaderDescription DescriptionItem;
-    public GameObject ArrowRight;
-    public GameObject ArrowLeft;
 
     public bool displayed = false;
-    public Category category = Category.All;
     public int chosen_item = 0;//chosen item (in currentList, 0-8)
     public int curPage = 0;//current page number
     private int maxPages;
@@ -65,7 +52,6 @@ public class Backpack : MonoBehaviour
     {
         backpack = this;
 
-        CatText.text = category.ToString();
         PageText.text = "0/0";
 
         //ItemsPerPage = ItemsPerRow * ItemsPerColumn;
@@ -143,12 +129,9 @@ public class Backpack : MonoBehaviour
     {
         displayed = true;
 
-        CatText.enabled = true;
         PageText.enabled = true;
-        Background.enabled = true;
+        Background.SetActive(true);
         DescriptionItem.gameObject.SetActive(true);
-        ArrowLeft.SetActive(true);
-        ArrowRight.SetActive(true);
 
         refreshView(false);
         EventSystem.current.SetSelectedGameObject(Tiles[0]);
@@ -159,12 +142,9 @@ public class Backpack : MonoBehaviour
     {
         displayed = false;
 
-        CatText.enabled = false;
         PageText.enabled = false;
-        Background.enabled = false;
+        Background.SetActive(false);
         DescriptionItem.gameObject.SetActive(false);
-        ArrowLeft.SetActive(false);
-        ArrowRight.SetActive(false);
 
         refreshView(false);
         EventSystem.current.SetSelectedGameObject(null);
@@ -175,41 +155,13 @@ public class Backpack : MonoBehaviour
         return displayed;
     }
 
-    public void changeCategory(Category newCat)
-    {
-        category = newCat;
-
-        CatText.text = category.ToString();
-
-        refreshView(true);
-    }
-
-    //changes category for: -1 - to previous one, 0 - does not change, 1 - to next one
-    public void changeCategory(int move)
-    {
-        move = Mathf.Clamp(move, -1, 1);
-        if ((int)category + move == CatNumber)
-        {
-            category = 0;
-        }
-        else if ((int)category + move == -1)
-        {
-            category = (Category)(CatNumber - 1);
-        }
-        else
-        {
-            category = (Category)((int)category + move);
-        }
-
-        CatText.text = category.ToString();
-
-        refreshView(true);
-    }
-
     //generates tiles to displaye items
     private void generateTiles()
     {
         Vector3 curPos = itemList.transform.position;
+        //float angle = itemList.transform.rotation.eulerAngles.z;
+        Quaternion tempRot = itemList.transform.rotation;
+        itemList.transform.rotation = Quaternion.identity;
 
         for (int i=0; i<ItemsPerPage; i++)
         {
@@ -221,6 +173,8 @@ public class Backpack : MonoBehaviour
             Tiles.Add(temp);
             temp.SetActive(false);
         }
+
+        itemList.transform.rotation = tempRot;
     }
 
     //Destroys tiles responsible for displaying items
@@ -243,42 +197,11 @@ public class Backpack : MonoBehaviour
     {
         currentList.Clear();
 
-        Item.Type curType = Item.Type.other;
-        switch (category)
+        for (int i = 0; i < Items.Count; i++)
         {
-            case Category.All:
-                break;
-            case Category.Ingredient:
-                curType = Item.Type.ingredient;
-                break;
-            case Category.Other:
-                curType = Item.Type.other;
-                break;
-            case Category.Quest:
-                curType = Item.Type.quest;
-                break;
-            default:
-                break;
-        }
-
-        if (category == Category.All)
-        {
-            for (int i = 0; i < Items.Count; i++)
+            if (Items[i].quantity > 0)
             {
-                if (Items[i].quantity > 0)
-                {
-                    currentList.Add(i);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                if (curType == Items[i].item.type && Items[i].quantity > 0)
-                {
-                    currentList.Add(i);
-                }
+                currentList.Add(i);
             }
         }
     }
@@ -348,14 +271,12 @@ public class Backpack : MonoBehaviour
         switch (change)
         {
             case -1:
-                lastSelected = ArrowLeft;
                 if (curPage > 0)
                 {
                     curPage--;
                 }
                 break;
             case 1:
-                lastSelected = ArrowRight;
                 if (currentList.Count > (curPage + 1) * ItemsPerPage)
                 {
                     curPage++;
