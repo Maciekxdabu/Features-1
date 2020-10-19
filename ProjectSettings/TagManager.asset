@@ -56,3 +56,6 @@ TagManager:
   - name: Bottle
     uniqueID: 3856896129
     locked: 0
+  - name: Gauge
+    uniqueID: 3613008505
+    locked: 0

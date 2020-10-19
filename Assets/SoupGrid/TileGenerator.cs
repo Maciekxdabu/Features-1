@@ -28,10 +28,10 @@ public class TileGenerator : MonoBehaviour
     public List<Text> ingredientsTexts;
     public Text mainCount;
     public Image ShopOverlay;
+    public Gauge gauge;
 
     [Header("Do not modify")]
-    [SerializeField]
-    private bool Visible = false;
+    public bool VisiblePot = false;
 
     void Start()
     {
@@ -58,6 +58,7 @@ public class TileGenerator : MonoBehaviour
         }
 
         mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
+        gauge.adjustFluid(1.0f * ingredientIndexes.Count / maxIngredients);
 
         Hide();
         GenerateGrid();
@@ -65,7 +66,7 @@ public class TileGenerator : MonoBehaviour
 
     public void HideReveal()
     {
-        if (Visible == true)//Hide
+        if (VisiblePot == true)//Hide
         {
             foreach (TileData tile in TileData.tilesList)
             {
@@ -85,7 +86,7 @@ public class TileGenerator : MonoBehaviour
                 return;
             }
 
-            Visible = true;
+            VisiblePot = true;
             ShopOverlay.enabled = true;
 
             foreach (TileData tile in TileData.tilesList)
@@ -99,7 +100,7 @@ public class TileGenerator : MonoBehaviour
 
     private void Hide()
     {
-        Visible = false;
+        VisiblePot = false;
         ShopOverlay.enabled = false;
 
         foreach (TileData tile in TileData.tilesList)
@@ -124,7 +125,7 @@ public class TileGenerator : MonoBehaviour
 
     public void GenerateGrid()
     {
-        if (Visible == true)
+        if (VisiblePot == true)
         {
             foreach (TileData tile in TileData.tilesList)
             {
@@ -180,18 +181,20 @@ public class TileGenerator : MonoBehaviour
 
     public void AddIngredient(Ingredient ing, int quantity)
     {
-        if (Visible == false)
+        if (VisiblePot == false)
         {
             int index = getIndex(ing);
 
             if (index != -1)
             {
-                while (ingredientIndexes.Count < maxIngredients)
+                while (ingredientIndexes.Count < maxIngredients && quantity > 0)
                 {
                     ingredientIndexes.Add(index);
+                    quantity--;
 
                     mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
                     ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                    gauge.adjustFluid(1.0f * ingredientIndexes.Count / maxIngredients);
                 }
             }
         }
@@ -200,7 +203,7 @@ public class TileGenerator : MonoBehaviour
     //used in a button
     public void AddIngredient(Ingredient ing)
     {
-        if (Visible == false)
+        if (VisiblePot == false)
         {
             if (ingredientIndexes.Count < maxIngredients)
             {
@@ -226,6 +229,7 @@ public class TileGenerator : MonoBehaviour
 
                     mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
                     ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                    gauge.adjustFluid(1.0f * ingredientIndexes.Count / maxIngredients);
                 }
             }
         }
@@ -234,7 +238,7 @@ public class TileGenerator : MonoBehaviour
     //used in a button
     public void SubtractIngredient(Ingredient ing)
     {
-        if (Visible == false)
+        if (VisiblePot == false)
         {
             int index = getIndex(ing);
 
@@ -254,6 +258,7 @@ public class TileGenerator : MonoBehaviour
 
                 mainCount.text = ingredientIndexes.Count + "/" + maxIngredients;
                 ingredientsTexts[index].text = CountIngredients(ingredients[index]).ToString();
+                gauge.adjustFluid(1.0f * ingredientIndexes.Count / maxIngredients);
             }
         }
     }
